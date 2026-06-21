@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoiseVu &mdash; Freshly Smoked Salmon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1614; --surface: #faf8f5; --surface-alt: #f3efe9;
+  --warm-white: #fdfcf9; --gold: #c9a96e; --gold-light: #e8d5b0;
+  --gold-dark: #a8884a; --brick: #9d6b53; --salmon: #d4785c;
+  --salmon-light: #f0c8b8; --smoke: #4a423e; --text: #2d2824;
+  --text-muted: #8a7e76; --border: #e5ddd5;
+  --radius: 16px; --radius-sm: 8px;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans); background: var(--surface); color: var(--text);
+  line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: 100%; display: block; object-fit: cover; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(250, 248, 245, 0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+nav .container { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.logo { font-family: var(--font-serif); font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 32px; list-style: none; font-size: 14px; font-weight: 500; color: var(--text-muted); }
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--ink); color: var(--warm-white); padding: 10px 24px;
+  border-radius: 100px; font-size: 13px; font-weight: 600; transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--smoke); }
+@media (max-width: 768px) { .nav-links { display: none; } }
+
+.hero {
+  margin-top: 72px; padding: 80px 0 60px; background: var(--ink);
+  color: var(--warm-white); position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(212,120,92,0.06) 0%, transparent 50%);
+}
+.hero .container { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.hero h1 { font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); line-height: 1.15; font-weight: 700; letter-spacing: -0.5px; }
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero p { font-size: 17px; color: rgba(253,252,249,0.7); margin-top: 20px; line-height: 1.7; max-width: 480px; }
+.hero-stats { display: flex; gap: 40px; margin-top: 36px; }
+.hero-stat-num { font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--gold); }
+.hero-stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: rgba(253,252,249,0.5); margin-top: 4px; }
+.hero-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; background: var(--smoke); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 768px) {
+  .hero { padding: 60px 0 40px; }
+  .hero .container { grid-template-columns: 1fr; gap: 40px; }
+  .hero-img { aspect-ratio: 16/9; }
+}
+
+.story { padding: 100px 0; }
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.story-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 1; background: var(--surface-alt); }
+.story-img img { width: 100%; height: 100%; object-fit: cover; }
+.story-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 600; margin-bottom: 16px; }
+.story h2 { font-family: var(--font-serif); font-size: clamp(28px, 3vw, 38px); line-height: 1.2; font-weight: 700; }
+.story p { color: var(--text-muted); margin-top: 16px; font-size: 15px; line-height: 1.8; }
+.commitment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.commitment-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--surface-alt); border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; }
+.commitment-item .check { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: #2d6b3f; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+@media (max-width: 768px) { .story { padding: 60px 0; } .story-grid { grid-template-columns: 1fr; gap: 40px; } .story-img { aspect-ratio: 4/3; } }
+
+.products { padding: 100px 0; background: var(--surface-alt); }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-header h2 { font-family: var(--font-serif); font-size: clamp(28px, 3vw, 38px); font-weight: 700; }
+.section-header p { color: var(--text-muted); margin-top: 12px; font-size: 15px; max-width: 560px; margin: 12px auto 0; }
+.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.product-card { background: var(--warm-white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: box-shadow 0.3s, transform 0.3s; }
+.product-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.product-img { aspect-ratio: 4/3; background: var(--surface-alt); overflow: hidden; }
+.product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.product-card:hover .product-img img { transform: scale(1.04); }
+.product-info { padding: 20px 24px 24px; }
+.product-name { font-family: var(--font-serif); font-size: 18px; font-weight: 600; }
+.product-desc { font-size: 13px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+.product-price { font-size: 20px; font-weight: 700; color: var(--gold-dark); margin-top: 12px; }
+.product-unit { font-size: 13px; font-weight: 400; color: var(--text-muted); }
+.product-badge { display: inline-block; background: var(--salmon-light); color: var(--salmon); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 100px; margin-bottom: 8px; }
+@media (max-width: 1024px) { .product-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .product-grid { grid-template-columns: 1fr; } }
+
+.combo { padding: 100px 0; background: var(--ink); color: var(--warm-white); }
+.combo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.combo h2 { font-family: var(--font-serif); font-size: clamp(28px, 3vw, 38px); line-height: 1.2; }
+.combo h2 span { color: var(--gold); }
+.combo p { color: rgba(253,252,249,0.7); margin-top: 16px; font-size: 15px; line-height: 1.7; }
+.combo-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; background: var(--smoke); }
+.combo-img img { width: 100%; height: 100%; object-fit: cover; }
+.combo-list { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+.combo-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(253,252,249,0.05); border-radius: var(--radius-sm); font-size: 14px; color: rgba(253,252,249,0.85); }
+.combo-item .tick { width: 20px; height: 20px; min-width: 20px; border-radius: 50%; background: var(--gold); color: var(--ink); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.combo-price { font-family: var(--font-serif); font-size: 32px; font-weight: 700; color: var(--gold); margin-top: 20px; }
+.combo-price-sub { font-size: 13px; color: rgba(253,252,249,0.4); }
+@media (max-width: 768px) { .combo-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+.process { padding: 100px 0; }
+.process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+.process-step { text-align: center; }
+.step-num { font-family: var(--font-serif); font-size: 48px; font-weight: 700; color: var(--gold-light); line-height: 1; }
+.process-step h3 { font-family: var(--font-serif); font-size: 20px; margin-top: 12px; }
+.process-step p { font-size: 14px; color: var(--text-muted); margin-top: 8px; line-height: 1.6; }
+.process-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 16/10; margin-top: 16px; background: var(--surface-alt); }
+.process-img img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 768px) { .process-steps { grid-template-columns: 1fr; } }
+
+.contact { padding: 100px 0; background: var(--ink); color: var(--warm-white); }
+.contact-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; }
+.contact h2 { font-family: var(--font-serif); font-size: clamp(24px, 2.5vw, 32px); font-weight: 700; }
+.contact h2 span { color: var(--gold); }
+.contact > p { color: rgba(253,252,249,0.6); margin-top: 12px; font-size: 15px; }
+.contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+.contact-card { padding: 20px; background: rgba(253,252,249,0.05); border-radius: var(--radius-sm); border: 1px solid rgba(253,252,249,0.08); }
+.contact-card .icon { font-size: 20px; margin-bottom: 8px; }
+.contact-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); font-weight: 600; }
+.contact-card .value { font-size: 15px; font-weight: 600; margin-top: 4px; }
+.contact-card .sub { font-size: 13px; color: rgba(253,252,249,0.5); margin-top: 2px; }
+.contact-cta-box { background: var(--gold); border-radius: var(--radius); padding: 32px; color: var(--ink); }
+.contact-cta-box h3 { font-family: var(--font-serif); font-size: 22px; }
+.contact-cta-box p { font-size: 14px; margin-top: 8px; opacity: 0.8; }
+.contact-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; background: var(--ink); color: var(--warm-white); padding: 14px 28px; border-radius: 100px; font-size: 14px; font-weight: 600; transition: 0.2s; }
+.contact-btn:hover { background: var(--smoke); }
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } .contact-cards { grid-template-columns: 1fr; } }
+footer { padding: 32px 0; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <div class="logo">Roise<span>Vu</span></div>
+    <ul class="nav-links">
+      <li><a href="#story">Câu chuyện</a></li>
+      <li><a href="#products">Sản phẩm</a></li>
+      <li><a href="#combo">Combo</a></li>
+      <li><a href="#process">Quy trình</a></li>
+      <li><a href="#contact">Liên hệ</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Đặt hàng ngay</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div>
+      <h1>Cá hồi hun khói<br><em>thủ công từ nhà gạch</em></h1>
+      <p>Chúng tôi chọn lọc cá hồi Na Uy tươi ngon nhất, ướp và hun khói lạnh hoàn toàn bằng tay trong nhà gạch củi gỗ thật &mdash; không dung dịch khói, không chất bảo quản.</p>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">12K</div><div class="hero-stat-label">Người theo dõi</div></div>
+        <div><div class="hero-stat-num">20-24h</div><div class="hero-stat-label">Hun khói mỗi mẻ</div></div>
+        <div><div class="hero-stat-num">&lt;30&deg;C</div><div class="hero-stat-label">Nhiệt độ hun lạnh</div></div>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="roisevu-images/roisevu_photos/fullres_0001_photo.jpg" alt="Cá hồi hun khói RoiseVu">
+    </div>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="story" id="story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-img">
+        <img src="roisevu-images/roisevu_photos/fullres_0023_photo.jpg" alt="Cá hồi hun khói lát">
+      </div>
+      <div>
+        <div class="story-label">🇳🇴 Tinh hoa Na Uy &mdash; Thủ công Việt</div>
+        <h2>Mỗi lát cá hồi là một hành trình của hương vị</h2>
+        <p>RoiseVu ra đời từ niềm đam mê mang hương vị cá hồi Na Uy chuẩn nhà hàng đến từng bữa ăn gia đình Việt. Chúng tôi tự tay chọn lựa những thanh củi gỗ chuẩn, xây dựng nhà gạch hun khói thủ công, và dày công hoàn thiện từng mẻ cá trong 20-24 tiếng &mdash; để tạo nên những lát cá hồi hun khói mềm mọng, béo bùi đặc trưng.</p>
+        <p>Không chỉ là một món ngon thưởng thức tại gia, cá hồi hun khói RoiseVu đã trở thành một nét văn hóa quà tặng tinh tế, gói trọn sự chỉn chu từ nguyên liệu, kỹ nghệ hun khói, đến set phụ kiện đi kèm và chiếc hộp sang trọng.</p>
+        <div class="commitment-grid">
+          <div class="commitment-item"><span class="check">✓</span> Cá hồi Na Uy nhập khẩu, bay date mới</div>
+          <div class="commitment-item"><span class="check">✓</span> Hun bằng củi gỗ thật 100%</div>
+          <div class="commitment-item"><span class="check">✓</span> Không dung dịch khói, không chất bảo quản</div>
+          <div class="commitment-item"><span class="check">✓</span> Không phụ gia, không phẩm màu</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="products" id="products">
+  <div class="container">
+    <div class="section-header">
+      <h2>Sản phẩm của chúng tôi</h2>
+      <p>Cá hồi hun khói lạnh thượng hạng &mdash; từ những lát cắt tinh tế đến bộ sưu tập trọn vẹn cho bàn tiệc</p>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img"><img src="roisevu-images/roisevu_photos/fullres_0034_photo.jpg" alt="Cá hồi hun khói mộc"></div>
+        <div class="product-info">
+          <div class="product-badge">Bán chạy</div>
+          <div class="product-name">Cá hồi hun khói mộc</div>
+          <div class="product-desc">Cold-smoked nguyên bản, hun bằng củi gỗ thật 20-24h. Vị khói nhẹ, béo ngậy, thớ cá mềm dẻo.</div>
+          <div class="product-price">175.000đ <span class="product-unit">/ 100g</span></div>
+          <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">155.000đ/100g (200-400g) &middot; 140.000đ/100g (từ 500g)</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="roisevu-images/roisevu_photos/fullres_0011_photo.jpg" alt="Candied Smoked Salmon"></div>
+        <div class="product-info">
+          <div class="product-badge" style="background:#e8d5b0;color:#a8884a">Đặc biệt</div>
+          <div class="product-name">Candied Smoked Salmon</div>
+          <div class="product-desc">Cá hồi hun khói lạnh nguyên bản, phết lớp mật ong &amp; siro lá phong trong quá trình hun. Ngọt dịu, thơm nồng.</div>
+          <div class="product-price">200.000đ <span class="product-unit">/ 100g</span></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="roisevu-images/roisevu_photos/fullres_0044_photo.jpg" alt="Platter Box"></div>
+        <div class="product-info">
+          <div class="product-badge" style="background:var(--surface-alt);color:var(--brick)">Quà tặng</div>
+          <div class="product-name">Platter Box</div>
+          <div class="product-desc">Hộp gỗ sang trọng kèm cá hồi hun khói, cream cheese, bánh Blini, cà chua bi sấy và sốt mù tạt mật ong.</div>
+          <div class="product-price">899.000đ <span class="product-unit">/ hộp</span></div>
+          <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">Mini: 499.000đ (200g cá + đồ kèm)</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="roisevu-images/roisevu_photos/fullres_0046_photo.jpg" alt="Cá hồi hun khói thái lát"></div>
+        <div class="product-info">
+          <div class="product-name">Cá hồi hun khói thái lát</div>
+          <div class="product-desc">Đóng gói hút chân không tiện lợi, thái lát sẵn 100g/pack. Dùng ngay cho bữa sáng, salad hay bữa tiệc.</div>
+          <div class="product-price">Theo trọng lượng</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="roisevu-images/roisevu_photos/fullres_0074_photo.jpg" alt="Túi thịt lọc"></div>
+        <div class="product-info">
+          <div class="product-name">Túi thịt lọc / vụn</div>
+          <div class="product-desc">Phần thịt lưng đen và thịt vụn &mdash; giàu omega-3, giá mềm. Phù hợp nấu cháo, salad hoặc làm pate.</div>
+          <div class="product-price">210.000đ <span class="product-unit">/ 300g</span></div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img"><img src="roisevu-images/roisevu_photos/fullres_0077_photo.jpg" alt="Salami bò hun khói"></div>
+        <div class="product-info">
+          <div class="product-name">Salami bò hun khói</div>
+          <div class="product-desc">Đồ ăn kèm lý tưởng cho Platter, kết hợp cùng cream cheese và bánh mì.</div>
+          <div class="product-price">60.000đ <span class="product-unit">/ lạng</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Combo -->
+<section class="combo" id="combo">
+  <div class="container">
+    <div class="combo-grid">
+      <div>
+        <div class="story-label" style="color:var(--gold)">🎯 Tiết kiệm đến 15%</div>
+        <h2>Combo <span>đặc biệt</span><br>Bàn tiệc tại gia</h2>
+        <p>Trọn vẹn hương vị trong một combo &mdash; thích hợp cho những buổi hẹn hò chill tại nhà, tiệc gia đình hay tụ tập bạn bè.</p>
+        <div class="combo-list">
+          <div class="combo-item"><span class="tick">✓</span> 500g Cá hồi Na Uy hun khói mộc (đóng pack 100g)</div>
+          <div class="combo-item"><span class="tick">✓</span> Cà chua bi sấy dầu oliu lá thơm 100g</div>
+          <div class="combo-item"><span class="tick">✓</span> Nụ bạch hoa + Sốt mù tạt mật ong</div>
+          <div class="combo-item"><span class="tick">✓</span> Cream cheese 85g + Bánh Blini (8 chiếc)</div>
+          <div class="combo-item"><span class="tick">✓</span> Hỗ trợ 30.000đ phí ship nhanh</div>
+        </div>
+        <div class="combo-price">875.000đ</div>
+        <div class="combo-price-sub">Đã bao gồm tất cả &mdash; tiết kiệm hơn 15% so với mua lẻ</div>
+      </div>
+      <div class="combo-img">
+        <img src="roisevu-images/roisevu_photos/fullres_0013_photo.jpg" alt="Combo 875k">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="section-header">
+      <h2>Quy trình thủ công</h2>
+      <p>Từ những thanh củi gỗ tiêu chuẩn đến lát cá hồi hoàn hảo &mdash; mọi công đoạn đều được làm bằng tay với tâm huyết</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="process-img"><img src="roisevu-images/roisevu_photos/fullres_0075_photo.jpg" alt="Chọn cá hồi Na Uy"></div>
+        <h3>Chọn nguyên liệu</h3>
+        <p>Cá hồi Na Uy nhập khẩu đường hàng không, date mới nhất &mdash; được chọn lọc kỹ càng từng con.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="process-img"><img src="roisevu-images/roisevu_photos/fullres_0016_photo.jpg" alt="Hun khói"></div>
+        <h3>Hun khói lạnh</h3>
+        <p>Xông khói bằng củi gỗ thật ở nhiệt độ dưới 30&deg;C trong 20-24 tiếng, độ ẩm 60-70%. Cá chín tới tự nhiên, giữ trọn độ mềm béo.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="process-img"><img src="roisevu-images/roisevu_photos/fullres_0054_photo.jpg" alt="Đóng gói"></div>
+        <h3>Đóng gói &amp; giao hàng</h3>
+        <p>Đóng gói hút chân không, bảo quản lạnh. Giao hàng theo lịch hẹn tại Hà Nội và TP. Hồ Chí Minh.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <h2>Liên hệ &amp; <span>đặt hàng</span></h2>
+        <p>Inbox qua Facebook hoặc Instagram để được tư vấn &mdash; RoiseVu luôn có sẵn các mẻ cá tươi ngon nhất tại xưởng, ship nhanh hỏa tốc trong ngày.</p>
+        <div class="contact-cards">
+          <div class="contact-card"><div class="icon">📞</div><div class="label">Hotline / Zalo</div><div class="value">0862.455.575</div></div>
+          <div class="contact-card"><div class="icon">✉️</div><div class="label">Email</div><div class="value">roisevufreshsmokedsalmon@gmail.com</div></div>
+          <div class="contact-card"><div class="icon">📍</div><div class="label">Địa chỉ</div><div class="value">Hoàng Ngân, Hà Nội</div><div class="sub">Phân phối tại Hà Nội &amp; TP. Hồ Chí Minh</div></div>
+          <div class="contact-card"><div class="icon">📱</div><div class="label">Mạng xã hội</div><div class="value">Facebook &middot; Instagram</div><div class="sub">@RoiseVufreshsmokedsalmon</div></div>
+        </div>
+        <div style="margin-top:24px;font-size:13px;color:rgba(253,252,249,0.4)">⏰ Giao hàng: T2-CN (8:30am - 8:00pm) &middot; 🚚 Hỗ trợ 30k ship nhanh &middot; 📦 Nhận hàng theo lịch hẹn</div>
+      </div>
+      <div class="contact-cta-box">
+        <h3>Đặt hàng ngay</h3>
+        <p>Inbox Facebook Page để nhận tư vấn, xem thực đơn và đặt suất pre-order giảm đến 15%.</p>
+        <a href="https://www.facebook.com/RoiseVufreshsmokedsalmon" target="_blank" class="contact-btn">💬 Facebook Messenger</a>
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(0,0,0,0.1);font-size:12px;opacity:0.6">⚡ Flash Sale cuối tuần: Thứ 6 &mdash; Chủ Nhật<br>🐟 Pre-order đầu tháng: Giảm 15% khi đặt từ 600g</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>RoiseVu &mdash; Freshly Smoked Salmon &middot; Cá hồi Na Uy hun khói thủ công</p>
+    <p style="margin-top:4px">&copy; 2026 RoiseVu &mdash; Thiết kế bởi Optimus Prime &middot; Nguồn dữ liệu từ Facebook Fanpage</p>
+  </div>
+</footer>
+
+</body>
+</html>
